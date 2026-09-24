@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LFA Applied to CNNs – Project Page</title>
+  <title>Object Detection Benchmarks are Incomplete – Project Page</title>
   <link rel="icon" type="image/png" href="./assets/images/Browser_Icon.png" />
   <!-- Tailwind (via CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -12,13 +12,17 @@
   window.MathJax = {
     tex: {
       inlineMath: [['$', '$'], ['\\(', '\\)']],
-      displayMath: [['$$', '$$'], ['\\[', '\\]']]
-    },
-    options: {
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      macros: {
+        toprule: "\\hline",
+        midrule: "\\hline",
+        bottomrule: "\\hline"
+      }
     }
   };
 </script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/latex.js/dist/latex.component.js"></script>
+
 
 <!-- MathJax loader -->
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
@@ -34,8 +38,8 @@
     <div class="px-4 pb-5 text-sm space-y-6 leading-relaxed">
       <nav class="space-y-1">
         <a href="#abstract"   class="block hover:underline text-gray-700">Abstract</a>
-        <a href="#method"     class="block hover:underline text-gray-700">Method</a>
-        <a href="#results"    class="block hover:underline text-gray-700">Results</a>
+        <a href="#annotation"     class="block hover:underline text-gray-700">Annotation Completeness</a>
+        <a href="#benchmarks"    class="block hover:underline text-gray-700">Two New Benchmarks</a>
         <a href="#resources"  class="block hover:underline text-gray-700">Resources</a>
         <a href="#acks"       class="block hover:underline text-gray-700">Acknowledgments</a>
         <a href="#citation"   class="block hover:underline text-gray-700">Citation</a>
@@ -46,8 +50,9 @@
       <div>
         <h3 class="font-semibold mb-1">Paper Links</h3>
         <ul class="list-disc list-inside space-y-1">
-          <li><a href="https://ebooks.iospress.nl/doi/10.3233/FAIA250793" class="text-blue-600 hover:underline">Paper</a></li>
-          <li><a href="https://github.com/vanbetteray/conv_svd_by_lfa" class="text-blue-600 hover:underline">GitHub Code</a></li>
+          <li><a href="https://arxiv.org/pdf/2609.21822" class="text-blue-600 hover:underline">Paper PDF</a></li>
+          <li><a href="https://arxiv.org/abs/2609.21822" class="text-blue-600 hover:underline">arXiv abstract & BibTeX</a></li>
+          <li><a href="https://github.com/JonathanKlees/Uncertainty-aware-Object-Detection" class="text-blue-600 hover:underline">Official implementation</a></li>
         </ul>
       </div>
     </div>
@@ -64,8 +69,8 @@
       <h2 class="text-xl font-bold mb-4">Navigation</h2>
       <nav class="space-y-2 mb-6 text-sm leading-relaxed">
         <a href="#abstract"   class="block hover:underline text-gray-700">Abstract</a>
-        <a href="#method"     class="block hover:underline text-gray-700">Method</a>
-        <a href="#results"    class="block hover:underline text-gray-700">Results</a>
+        <a href="#annotation"     class="block hover:underline text-gray-700">Annotation Completeness</a>
+        <a href="#benchmarks"    class="block hover:underline text-gray-700">Two New Benchmarks</a>
         <a href="#resources"  class="block hover:underline text-gray-700">Resources</a>
         <a href="#acks"       class="block hover:underline text-gray-700">Acknowledgments</a>
         <a href="#citation"   class="block hover:underline text-gray-700">Citation</a>
@@ -75,8 +80,9 @@
       <hr class="my-6">
       <h3 class="font-semibold mb-2 text-sm">Paper Links</h3>
       <ul class="list-disc list-inside space-y-1 text-sm leading-relaxed mb-6">
-        <li><a href="https://ebooks.iospress.nl/doi/10.3233/FAIA250793" class="text-blue-600 hover:underline">Paper</a></li>
-          <li><a href="https://github.com/vanbetteray/conv_svd_by_lfa" class="text-blue-600 hover:underline">GitHub Code</a></li>
+        <li><a href="https://arxiv.org/pdf/2609.21822" class="text-blue-600 hover:underline">Paper PDF</a></li>
+        <li><a href="https://arxiv.org/abs/2609.21822" class="text-blue-600 hover:underline">arXiv abstract & BibTeX</a></li>
+        <li><a href="https://github.com/JonathanKlees/Uncertainty-aware-Object-Detection" class="text-blue-600 hover:underline">Official implementation</a></li>
       </ul>
       <hr class="my-6">
     </aside>
@@ -87,31 +93,45 @@
       <!-- HERO -->
       <header class="text-center mb-12">
         <h1 class="text-4xl font-extrabold leading-tight">
-          LFA Applied to CNNs: Efficient Singular Value Decomposition of Convolutional Mappings by Local Fourier Analysis
+          Object Detection Benchmarks are Incomplete:<br>The Role of Label Errors and Annotation Uncertainty
         </h1>
 
         <!-- AUTHORS -->
         <p class="text-sm text-gray-500 mt-3">
-          <a href="mailto:vanbetteray[at]uni-wuppertal.de"
+          <a href="mailto:sarina.penquitt[at]uni-osnabrueck.de"
             class="text-blue-600 hover:underline" target="_blank"
-            rel="noopener noreferrer">Antonia van Betteray</a><sup>2</sup> •
-          <a href="mailto:kkahl[at]uni-wuppertal.de"
+            rel="noopener noreferrer">Sarina Penquitt</a><sup>1, 4</sup> •
+          <a href="mailto:jonathan.klees[at]uni-osnabrueck.de"
             class="text-blue-600 hover:underline" target="_blank"
-            rel="noopener noreferrer">Karsten Kahl</a><sup>1</sup> •
+            rel="noopener noreferrer">Jonathan Kleest</a><sup>1, 4</sup> •
+          <a href="mailto:antonia.vanbetteray[at]uni-osnabrueck.de"
+            class="text-blue-600 hover:underline" target="_blank"
+            rel="noopener noreferrer">Antonia van Betteray</a><sup>1</sup> •
+          <a href="mailto:parssa.jashnieh[at]uni-osnabrueck.de"
+            class="text-blue-600 hover:underline" target="_blank"
+            rel="noopener noreferrer">Parssa Jashnieh</a><sup>1</sup> •
+          <a href="mailto:stehr[at]uni-wuppertal.de"
+            class="text-blue-600 hover:underline" target="_blank"
+            rel="noopener noreferrer">Peter Stehr</a><sup>2</sup> •
           <a href="https://osvia.github.io/team.html"
             class="text-blue-600 hover:underline" target="_blank"
-            rel="noopener noreferrer">Matthias Rottmann</a><sup>2</sup>
+            rel="noopener noreferrer">Matthias Rottmann</a><sup>1, 5</sup> •
+          <a href="mailto:lars.schmarje[at]wayve.ai"
+            class="text-blue-600 hover:underline" target="_blank"
+            rel="noopener noreferrer">Lars Schmarje</a><sup>3, 5</sup>
         </p>
 
         <!-- AFFILIATION FOOTNOTE -->
         <p class="text-xs text-gray-500 mt-1">
-          <sup>1</sup> Department&nbsp;of&nbsp;Mathematics, University&nbsp;of&nbsp;Wuppertal, Wuppertal, Germany
+          <sup>1</sup> Institute of Computer Science, University of Osnabrück, Osnabrück, Germany
           <br>
-          <sup>2</sup> Institute of Computer Science, University of Osnabrück, Osnabrück, Germany
-          <br><br>
-          Frontiers in Artificial Intelligence and Applications, Volume 413
+          <sup>2</sup> Department&nbsp;of&nbsp;Mathematics, University&nbsp;of&nbsp;Wuppertal, Wuppertal, Germany
           <br>
-          ECAI 2025 doi: "10.3233/FAIA250793"
+          <sup>3</sup> Wayve, London, United Kingdom
+          <br>
+          <sup>4</sup> Equal contribution
+          <br>
+          <sup>5</sup> Equal contribution
         </p>
 
         <!-- LOGO STRIP -->
@@ -139,7 +159,7 @@
         <div class="flex flex-wrap justify-center gap-3 mt-6">
 
           <!-- Paper / Document icon -->
-          <a href="https://ebooks.iospress.nl/doi/10.3233/FAIA250793"
+          <a href="https://arxiv.org/abs/2609.21822"
             class="inline-flex items-center px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700">
             <!-- Heroicons outline: DocumentText -->
             <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -155,7 +175,7 @@
           </a>
 
           <!-- GitHub -->
-          <a href="https://github.com/vanbetteray/conv_svd_by_lfa"
+          <a href="https://github.com/JonathanKlees/Uncertainty-aware-Object-Detection"
             class="inline-flex items-center px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700">
             <!-- GitHub Octicon: mark-github -->
             <svg class="w-5 h-5 mr-2" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
@@ -180,6 +200,7 @@
           <img src="./assets/images/title.png"  alt="Title image 1"
               class="h-64 w-auto max-w-[100%] md:max-w-none rounded-lg shadow-sm">
         </div>
+        <sub class="text-xs text-gray-500 mt-1 justify-center flex items-center">🟩 Original ground truth label, 🟥 Label error detected in validated GT (with soft label probability)</sub>
       </header>
       <!-- /HERO -->
 
@@ -188,206 +209,276 @@
       <section id="abstract" class="space-y-4 lg:max-w-6xl  lg:mx-auto">
         <h2 class="text-2xl font-semibold">Abstract</h2>
         <p>
-          The singular values of convolutional mappings encode interesting spectral properties, which can be used, e.g., to improve generalization and robustness of convolutional neural networks as well as to facilitate model compression. However, the computation of singular values is typically very resource-intensive. The naive approach involves unrolling the convolutional mapping along the input and channel dimensions into a large and sparse two-dimensional matrix, making the exact calculation of all singular values infeasible due to hardware limitations. In particular, this is true for matrices that represent convolutional mappings with large inputs and a high number of channels. Existing efficient methods leverage the Fast Fourier transformation (FFT) to transform convolutional mappings into the frequency domain, enabling the computation of singular values for matrices representing convolutions with larger input and channel dimensions. For a constant number of channels in a given convolution, an FFT can compute N singular values in O(N log N) complexity. In this work, we propose an approach of complexity O(N) based on local Fourier analysis, which additionally exploits the shift invariance of convolutional operators. We provide a theoretical analysis of our algorithm’s runtime and validate its efficiency through numerical experiments. Our results demonstrate that our proposed method is scalable and offers a practical solution to calculate the entire set of singular values – along with the corresponding singular vectors if needed – for high-dimensional convolutional mappings.
-        </p>
-      </section>
-
-      <!-- MOTIVATION -->
-      <section id="motivation" class="space-y-6 bg-gray-100 rounded-xl px-6 py-8 lg:max-w-6xl lg:mx-auto">
-        <h2 class="text-2xl font-semibold">Motivation</h2>
-        <p>
-          Let $ A: \mathbb{R}^{m \times n \times c_{in}} \longrightarrow \mathbb{R}^{m \times n \times c_{out}} $a convolution mapping, i.e., a linear and translation-invariant transformation with $m, n$ spatial input dimension and $c_{in}$ and $c_{out}$  the respective number of input and output channels. The singular values of such a mapping reveals for example insights into regularization and robustness. However, the singular value decomposition is typically computed from matrices. In matrix representation, the convolution becomes a large sparse banded matrix, cf., Fig. 1(a).  If $m = n$ and $c = c_{in} = c_{out}$ the computation complexity to compute the SVD of the convolution matrix is $\mathcal{O}(n^6c^3)$. It is easy to see, that this explicit SVD computation becomes infeasible.
-        </p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8">
-          <!-- Left card -->
-          <div class="space-y-3">
-            <h3 class="text-xl font-semibold mb-3 text-center">
-            </h3>
-            <figure class="rounded-lg overflow-hidden flex items-center justify-center">
-              <img
-                src="./assets/images/conv_matrix-1.png"
-                alt="motivation_image0"
-                loading="lazy"
-                class="w-full md:w-2/3 h-auto object-cover"
-              />
-            </figure>
-            <sub class="text-xs text-gray-500 mt-1 justify-center flex items-center">Figure 1 (a), Matrix representation of convolution on input.</sub>
-          </div>
-        
-          <!-- Right card -->
-          <div class="space-y-3">
-            <h3 class="text-xl font-semibold mb-3 text-center">
-            </h3>
-            <figure class="rounded-lg overflow-hidden flex items-center justify-center">
-              <img
-                src="./assets/images/block_matrices-1.png"
-                alt="motivation_image1"
-                loading="lazy"
-                class="w-full md:w-2/3 h-auto object-cover"
-              />
-            </figure>
-            <sub class="text-xs text-gray-500 mt-1 justify-center flex items-center">Figure 1 (b), Matrix composed of $m \cdot n$ blocks  of size $c_{in} \times c_{out}$</sub>
-          </div>
-        </div>
-        
-      </section>
-
-     <!-- METHOD OVERVIEW -->
-      <section id="method" class="space-y-6 bg-gray-100 rounded-xl px-6 py-8 lg:max-w-6xl lg:mx-auto min-w-0 break-words [overflow-wrap:anywhere]">
-        <h2 class="text-2xl font-semibold">Method Overview</h2>
-
-        <p class="min-w-0 break-words [overflow-wrap:anywhere]">
-          To efficiently compute the SVD for large convolution mappings for large input and channel dimensions, we exploit the translation-invariance by using local Fourier analysis, which is a method developed for the analysis of iterative solvers. We make use of the convolution theorem, that states, that convolutions diagonalize under Fourier transform. In particular, by the application of a Fourier transform, the convolution becomes a block-diagonal operator and instead of computing the SVD from the large sparse matrix, the SVD can be computed from the smaller, independent block matrices.
-        </p>
-
-        <p class="min-w-0 break-words [overflow-wrap:anywhere]">
-          A related approach is based on FFT and requires a complexity of $\mathcal{O}(n^2c^2(c + \log n))$. By exploiting the translation-invariance of the convolution operator, our approach requires only a complexity of $\mathcal{O}(n^2 c^3)$, which is asymptotically optimal with respect to the input dimension.
-        </p>
-
-        <p class="min-w-0 break-words [overflow-wrap:anywhere]">
-          To formalize this, we express convolutional mappings as multiplication operators. To that end, we assume periodic boundary conditions, which corresponds to an infinite repetition of the input across space. Furthermore, the convolution acts on a local neighborhood $\mathcal{N}$, e.g., a $3 \times 3$ kernel centered around a spatial coordinate $x$, cf. Fig. 2)
-        </p>
-
-        <div class="grid md:grid-cols-1 gap-x-6 gap-y-8">
-          <div class="space-y-3 min-w-0">
-            <figure class="rounded-lg overflow-hidden flex items-center justify-center">
-              <img
-                src="./assets/images/kernel-1.png"
-                alt="method_image0"
-                loading="lazy"
-                class="w-full max-w-xs h-auto object-contain"
-              >
-            </figure>
-            <sub class="text-xs text-gray-500 mt-1 justify-center flex items-center">Figure 2, $3 \times 3$ kernel neighborhood centered around $x$.</sub>
-          </div>
-        </div>
-
-        <p class="min-w-0 break-words [overflow-wrap:anywhere]">
-          Collecting all coupled input and output channels corresponding to each neighboorhood $\delta \in \mathcal{N}$ location yields a matrix
-          $ M_A^{(\delta)} \in \mathbb{R}^{c_{out}} \times  \mathbb{R}^{c_{in}}.$
-          With that the convolution of $A$ with an input $f$ evaluated at $x$ can be written as a multiplication operator
-          $
-            (A *f)(x) = \sum_{\delta \in \mathcal{N}} M_A^{(\delta)}  \cdot f(x + \delta).
-          $
-          To apply the convolution theorem, we choose the Fourier mode $f_k = e^{2 \pi \mathtt{i} \langle k, x \rangle}$ as ansatz function, with $k$ denoting a frequency. The convolution of $A$ with $f_k$ reduces to
-          $
-          (A \ast f_k)(x) = \sum_{\delta \in \mathcal{N}} M^{(\delta)}_{A} \cdot e^{2 \pi \mathtt{i} \langle k, x + \delta \rangle} = \underbrace{\left(
-                  \sum_{\delta \in \mathcal{N}} M^{(\delta)}_{A} \cdot e^{2 \pi \mathtt{i} \langle k, \delta \rangle}
-                  \right)}_{A_k}
-                  e^{2 \pi \mathtt{i} \langle k, x \rangle} = A_k \cdot f_k,
-          $
-          i.e., a matrix vector multiplication.
-        </p>
-
-        <p class="min-w-0 break-words [overflow-wrap:anywhere]">
-          For each frequency $k$ we obtain a symbol matrix $A_k \in \mathbb{C}^{c_{out} \times c_{in}}$ and thus the convolution becomes a block diagonal operator. With that, the SVD can now be computed from each matrix $A_k$ independently as
-          $
-            A_k = U_k \Sigma_k V^*_k,
-          $
-          where $U_k, V_k^*$ are unitary matrices containing the singular vectors and $\Sigma_k$ is diagonal with singular values as entries.
-        </p>
-
-        <p class="min-w-0 break-words [overflow-wrap:anywhere]">
-          To that end the SVD by LFA can be viewed as a two-staged diagonalization
-          <br>1. (Block-) Diagonalization by Fourier transform
-          <br>2. Diagonalization of the block-diagonal matrix by SVD
+          While object detection has advanced through improved architecutres and open-vocabulary models, we provide strong evidence that benchmark quality is fundamentally limited by annotation incompleteness. Across four widely used datasets -- COCO, Pascal VOC, Cityscapes, and KITTI-- re-annotation reveals substantial increases in annotated objects, driven primarily by previously unlabeled small, occluded, or densely packed instances. 
           <br><br>
-          This process based on local Fourier analysis is summarized in the following algorithm.
+          We introduce a scalable annotation pipeline that emphasizes high recall and captures ambiguity through soft labels aggregated from at least 11 annotators per object. The resulting annotations improve coverage and align well with human calibration. Based on these annotations, we establish two large-scale benchmarks: an uncertainty-aware object detection benchmark, and a label error detection benchmark grounded in real label errors.
         </p>
+      </section>
 
-        <div class="min-w-0 break-words [overflow-wrap:anywhere] whitespace-pre-wrap text-sm leading-relaxed">
-        $\mathbf{Algorithm\;\operatorname{SVD\;by\;LFA} (A, m, n)}$
-        $\operatorname{Initialize}$: $X = \{0, \frac{1}{n}, \frac{2}{n}, \ldots, \frac{n-1}{n}\}$, ${Y = \{0, \frac{1}{m}, \frac{2}{m}, \ldots, \frac{m-1}{m}}\}$
-        ${K = X \times Y}$
-        $\mathtt{1:}$ for $k \in K$ do: $\triangleright$ $\mathcal{O}(m\cdot n)$
-        $\mathtt{2:}$ $A_k = \sum_{\delta \in \mathcal{N}} M_A^{(\delta)} \cdot e^{2 \pi \mathtt{i} \langle k, x \rangle}$ $\triangleright$ $\mathcal{O}(1)$
-        $\mathtt{3:}$ $U_k, \Sigma_k, V_k^* = \operatorname{SVD}(A_k)$ $\triangleright$ $\mathcal{O}(c^3)$
-        $\mathtt{4:}$ end for
-        $\mathtt{5:}$ Collect all $U_k, V_k, U_k^*$ to obtain full SVD $A = U\Sigma V^*$
+      <!--Annotation Pipeline -->
+      <section id="motivation" class="space-y-6 bg-gray-100 rounded-xl px-6 py-8 lg:max-w-6xl lg:mx-auto">
+        <h2 class="text-2xl font-semibold">Annotation Pipeline</h2>
+        <p>
+          A three-stage crowdsourcing microtask pipeline decomposes the annotation task to maximize recall and quality independently at each step.
+        </p>
+         <div class="flex flex-wrap justify-center gap-2 mt-6">
+          <img src="./assets/images/latex_figure.png"  alt="latex figure"
+              class="h-64 w-auto max-w-[100%] md:max-w-none rounded-lg shadow-sm">
         </div>
+        <p>
+          <b>Step 1: Keypoint Collection</b> All potential objects of a given class are marked with a keypoint. Uncertain and partially visible objects are included.
+          <br><b>Step 2: Bounding Box</b> For each keypoint, a tight bounding box is drawn and verified.
+          <br><b>Step 3: Soft Labels</b> 11+ annotators assign class labels per box, producing a probability distribution that captures annotation uncertainty.
+        </p>        
+      </section>
+
+     <!-- Annotation Completeness -->
+      <section id="annotation" class="space-y-6 bg-gray-100 rounded-xl px-6 py-8 lg:max-w-6xl lg:mx-auto min-w-0 break-words [overflow-wrap:anywhere]">
+        <h2 class="text-2xl font-semibold">Annotation Completeness</h2>
 
         <p class="min-w-0 break-words [overflow-wrap:anywhere]">
-          Consequently, the overall complexity to compute the SVD by LFA requires only a complexity $\mathcal{O}(n^2 c^3)$, in the case of a square input.
+          Our re-annotation substantially improves dataset completeness. The validated ground truth contains more annotated objects across all datasets, with particularly large increases for KITTI (+60.0%) and COCO (+40.0%). To further assess annotation completeness, we manually review randomly sampled images and estimate the fraction of visible objects missing from the annotations. The validated ground truth consistently shows substantially lower false negative rates across all datasets, indicating that our annotation pipeline successfully recovers a large fraction of previously missed objects.
+        </p>
+
+        <p class="min-w-0 break-words [overflow-wrap:anywhere] text-center">
+          $$
+          \begin{array}{l|ccc}
+          \hline
+          \text{Dataset} & \text{Original} & \text{Validated (Ours)} & \Delta[\%]\uparrow \\
+          \hline
+          \text{Cityscapes} & 62{,}649 & 65{,}856 & +5.1 \\
+          \text{Pascal VOC}  & 31{,}561 & 34{,}262 & +8.6 \\
+          \text{KITTI}      & 39{,}597 & 63{,}348 & +60.0 \\
+          \text{COCO}       & 36{,}781 & 51{,}487 &  +40.0 \\
+          \hline
+          \end{array}
+          $$
+          <sub class="text-gray-500">Object Count Increase</sub>
+        </p>
+
+        <p class="min-w-0 break-words [overflow-wrap:anywhere] text-center">
+          $$
+          \begin{array}{l cc}
+          \hline
+          \text{Dataset} & \text{Original} & \text{Validated (Ours)} \\
+          \hline
+          \text{Pascal VOC}  & 18.6 \pm 1.7 & 9.3 \pm 1.3 \\
+          \text{COCO}        & 13.1 \pm 1.0 & 6.1 \pm 0.7 \\
+          \text{KITTI}       & 41.5 \pm 1.3 & 11.6 \pm 0.8 \\
+          \text{Cityscapes}  & 11.1 \pm 0.6 & 3.8 \pm 0.3 \\
+          \hline
+          \end{array}
+          $$
+          <sub class="text-gray-500">False Negative Rate</sub>
         </p>
       </section>
 
       
-      <!-- results -->
-      
-      <section id="results" class="space-y-6 bg-gray-100 rounded-xl px-6 py-8 lg:max-w-6xl lg:mx-auto">
-          <h2 class="text-2xl font-semibold">Qualitative Results</h2>
-          <!-- ──  Captioning Quality ───────────────────────────────────── -->
-          <div
-          class="flex flex-col min-[1360px]:flex-row min-[1360px]:items-start min-[1360px]:gap-8">
-          <!-- Explanatory text -->
-          <div class="space-y-3 mb-4 min-[1360px]:mb-0 min-[1360px]:w-1/3">
-              <h3 class="font-semibold text-lg">
-                Execution runtime
-              </h3>
-              <p class="text-sm leading-relaxed">
-                Besides the analysis of the computational complexity we study the execution runtime in seconds ($s$) for different input sizes $n$. The number of channels is fixed to $16$ for in- and output channels.
+      <!-- Two New Benchmarks -->
+      <section id="benchmarks" class="space-y-6 bg-gray-100 rounded-xl px-6 py-8 lg:max-w-6xl lg:mx-auto min-w-0 break-words [overflow-wrap:anywhere]">
+        <h2 class="text-2xl font-semibold">Two New Benchmarks</h2>
 
-                We begin by comparing the runtimes of the explicit computation and the Fourier-based computations in Figure 3. For the computation of the explicit SVD we observe that the runtime grows rapidly with increasing input size. The maximum tractable size we were able to decompose was an input of $64 \times 64$. The computation of the corresponding $\approx 65$ thousand singular values took around 14 hours. On the other hand, the SVDs by Fourier-based approaches scale better. At $n=64$ the computation of $\approx 65$ thousand singular values takes only $\approx 0.1$ seconds. For very small input sizes, i.e., $n=4$, the FFT-based approach is slightly faster. When increasing the input dimension, our LFA-based approach becomes dominant. For example for an input of size $512 \times 512$ our LFA-based approach is about $14.5 \%$ faster. Furthermore, we observe, that Fourier-based approaches are scalable to very large input dimensions, as illustrated in Figure 3(b). 
+        <p class="min-w-0 break-words [overflow-wrap:anywhere]">
+          Current detectors are strongly depended on annotation quality and are misaligned with human perception. Current label error detection methods, which have been shown to perform well on synthetic noise, struggle to achieve high recall and precision on real label errors. Our results highlight the need for future object detection benchmarks to move beyond deterministic annotations toward high-recall, uncertainty-aware evaluation that maximizes valid instances and better reflects real-world ambiguity.
+        </p>
 
-                As the input size increases, our LFA-based approach scales better than the FFT-based approach. For example at $n = 2^{14}$, which corresponds to the computation of $4$ billion singular values. With the FFT-based approach the compuation of $4$ billion singular values takes approximatively $3$ hours, with our LFA-based approach we obtain the same singular values in approximatevly $2$ hours. This corresponds to an improvement of $30.6\%$.
-              </p>
-          </div>
-      
-          <!-- Chart -->
-          <div class="flex-1 overflow-hidden">
-              <img src="./assets/images/runtime-lfa_vs_fft-xlog-1.png" alt="table1" class="chart-image w-full border rounded-md" />
-              <sub class="text-xs text-gray-500 mt-1 justify-center items-center">Figure 3(a), Runtimes to compute SVD for input sizes $n \in \{4,8,16, \ldots, 512\}$ comparing the explixit computation and FFT-based computations. The number of channels is fixed to $16$ for input and output channel dimension respectively. Both axes are log-scaled.
-              </sub><br><br>
-              <img src="./assets/images/runtime-lfa_vs_fft-xlog-2.png" alt="table1" class="chart-image w-full border rounded-md" />
-              <sub class="text-xs text-gray-500 mt-1 justify-center items-center">Figure 3(b), Runtimes to compute the SVD for inputs with $n \in \{2^i | i \in 8, 10, \ldots, 14\}$.  The number if channels is fixed to $16$ and the $x$-axis is log-scaled.
-              </sub>
-          </div>
-          </div>
-      
-        <!-- ─────────────────────────────────── -->
-          <div
-              class="flex flex-col min-[1360px]:flex-row min-[1360px]:items-start min-[1360px]:gap-8">
-              <!-- Explanatory text -->
-              <div
-                  class="space-y-3 mb-4 min-[1360px]:mb-0 min-[1360px]:w-1/3">
-                  <h3 class="font-semibold text-lg">
-                    Effect of boundary conditions
-                  </h3>
-                  <p>
-                    In order to enable diagonalization in the Fourier-domain, we assumed periodic boundary conditions. However, in CNNs, typically Dirichelt boundary conditions, i.e., zero padding, is applied. To this end, we studied the effect of boundary conditions on the singular values in Figure 4. 
-                    
-                    Figure 4 "Effect on Dirichlet and periodic boundary conditions on the Singular values for input sizes in $n$ 
-                    
-                    For small $n$ the boundary effects dominate, as the singular values differ noticeably. Nevertheless, as the input dimension increases, the influence becomes negligible and consequently, the computation by LFA remains accurate for large input feature maps in practical applications. 
-                  </p>
-              </div>
-                  <!-- Chart -->
-                  <div class="flex-1 overflow-hidden">
-                    <img src="./assets/images/boundary_cond.png" alt="table2" class="chart-image w-full border rounded-md"/>
-                    <sub class="text-xs text-gray-500 mt-1 justify-center flex items-center">Figure 4, Effect on Dirichlet and periodic boundary conditions on the Singular values for input sizes in $n$ </sub>
-                </div>
-              </div>
+        <!--------------------->
+        <h3 class="text-1xl font-semibold">Object Detection Benchmark</h3>
 
-        <!-- ─────────────────────────────────── -->
-        <div
-            class="flex flex-col min-[1360px]:flex-row min-[1360px]:items-start min-[1360px]:gap-8">
-            <!-- Explanatory text -->
-            <div
-                class="space-y-3 mb-4 min-[1360px]:mb-0 min-[1360px]:w-1/3">
-                <h3 class="font-semibold text-lg">
-                  Memory layout
-                </h3>
-                <p>Additionally, in our experiments we observed, that our LFA-based implementation yields an memory layout, which allows for a faster computation of the subsequent SVD by a standard routine such as $\mathtt{NumPy}$.</p>
-            </div>
+        <p class="min-w-0 break-words [overflow-wrap:anywhere]">
+          Benchmark performance is highly sensitive to annotation quality, though model rankings remain largely stable. A new evaluation protocol that generalizes average precision (AP) to soft labels, enabling instance-wise comparison between model predictions and human annotation uncertainty.
+        </p>
+
+        <div class="w-full overflow-x-auto pb-4">
+          <p class="min-w-max text-center">
+            $$
+            \begin{array}{l|cc|cc|cc|cc}
+            \toprule
+            & \text{COCO} & & \text{Pascal VOC} & & \text{KITTI} & & \text{Cityscapes} & \\
+            \text{Model} & \text{Orig.} & \text{Val.} & \text{Orig.} & \text{Val.} & \text{Orig.} & \text{Val.} & \text{Orig.} & \text{Val.} \\
+            \midrule
+            \text{Grounding DINO} & 0.5690 & 0.5210 & 0.8005 & 0.7378 & 0.2918 & \underline{0.3942} & 0.3419 & 0.4382 \\
+            \text{YOLOv8-World v2} & 0.4453 & 0.4377 & 0.6965 & 0.6544 & 0.1986 & 0.2444 & 0.2411 & 0.3035 \\
+            \text{OWL-ViT} & 0.2868 & 0.2855 & 0.5275 & 0.4921 & 0.0928 & 0.0955 & 0.1160 & 0.1378 \\
+            \text{RT-DETR-L} & 0.5239 & 0.4720 & 0.7028 & 0.6418 & 0.7846 & \textbf{0.2733} & 0.3822 & 0.4248 \\
+            \text{YOLOv8-L} & 0.5168 & 0.4779 & 0.7442 & 0.6739 & 0.7468 & \textbf{0.2666} & 0.3814 & 0.4435 \\
+            \text{Faster R-CNN} & 0.4709 & 0.4312 & 0.6125 & 0.5557 & 0.6529 & \textbf{0.2672} & 0.3591 & 0.4102 \\
+            \bottomrule
+            \end{array}
+            $$
+          </p>
+          <p class="text-center text-sm text-gray-500 mt-2">Object Count Increase</p>
         </div>
+
+        <p class="min-w-0 break-words [overflow-wrap:anywhere]">
+          <b>Impact of Annotation Quality on Object Detection Performance.</b> We evaluate several object detectors, trained on the original ground truth against both the original and our validated annotations. The results show that detector performance can change substantially when evaluated on the more complete ground truth, particularly on KITTI, where large differences are observed for several models. These findings demonstrate that annotation completeness and quality can have considerable impact on reported benchmark performance and the conclusions drawn from model comparisons.
+        </p>
+
+        <div class="w-full overflow-x-auto pb-4">
+          <p class="min-w-max text-center">
+            $$
+            \begin{array}{l c c c c c c c}
+            \toprule
+            \text{Model} 
+            & \text{AS}_{50..95}\,\uparrow & \text{AS}_{\text{S}}\,\uparrow  & \text{AS}_{\text{L}}\,\uparrow  & \text{TVD}\,\downarrow & \text{TVD}_{\text{TP}}\,\downarrow & \sqrt{\mathrm{JS}}\,\downarrow & \sqrt{\mathrm{JS}}_{\text{TP}}\,\downarrow \\
+            \midrule
+            \text{Grounding DINO} & \textbf{0.5508} & \textbf{0.3842} & \textbf{0.7875} & \textbf{0.1198} & 0.3823 & \textbf{0.1636} & 0.3495 \\
+            \text{YOLOv8-World v2} & 0.4808 & 0.3060 & 0.7032 & 0.1641 & 0.3758 & 0.2230 & 0.3570 \\
+            \text{OWL-ViT} & 0.3583 & 0.1402 & 0.6781 & 0.1386 & 0.7524 & 0.1845 & 0.6305 \\
+            \text{RT-DETR-L} & 0.4910 & 0.3226 & 0.7454 & 0.1406 & 0.4688 & 0.1934 & 0.4397 \\
+            \text{YOLOv8-L} & 0.4664 & 0.3032 & 0.6779 & 0.1756 & 0.3312 & 0.2374 & 0.3170 \\
+            \text{Faster R-CNN} & 0.4395 & 0.2965 & 0.6129 & 0.1815 & \textbf{0.2468} & 0.2190 & \textbf{0.2552} \\
+            \bottomrule
+            \end{array}
+            $$
+          </p>
+        </div>
+
+        <p class="min-w-0 break-words [overflow-wrap:anywhere]">
+          <b>Soft Label-Based Evaluation of Object Detectors.</b> We evaluate how well model predictions align with human uncertainty using our soft-label annotations. Average Similarity (AS) measures the similarity between predicted and ground truth class distributions, while total variation distance (TVD) and Jensen-Shannon distnace (\sqrt(JS}) quantify the discrepancy. The subscript TP restricts the respective metric to predictions matched with a ground-truth object, while S and L denote small and large objects. Overall, Grounding DINO achieves the highest AS and performs best across all predictions, whereas Faster R-CNN shows the closest alignment with human soft labels for matched predictions.
+        </p>
+
+        <!----------->
+
+        <h3 class="text-1xl font-semibold">Label Error Detection Benchmark</h3>
+
+        <p class="min-w-0 break-words [overflow-wrap:anywhere]">
+          The first large-scale benchmark for label error detection in object detection grounded in real label errors and not synthetic noise. Current methods that perform well on synthetic settings struggle significantly on real-world label errors, highlighting a substantial gap.
+        </p>
+
+        <div class="w-full overflow-x-auto pb-4">
+          <p class="min-w-max text-center">
+            $$
+            \begin{array}{l c c c | c c c}
+            \toprule
+            & & \text{Less Restrictive} & & & \text{Stricter} & \\
+            \text{Dataset} & \text{Missing} & \text{Misaligned} & \text{Classification} & \text{Missing} & \text{Misaligned} & \text{Classification} \\
+            \midrule
+            \text{Cityscapes} 
+            & \text{5,249 (8.4 %)} 
+            & \text{2,385 (3.8 %)} 
+            & \text{85 (0.1 %)} 
+            & \text{2,229 (3.6 %)} 
+            & \text{1,318 (2.1 %)} 
+            & \text{56 (0.1 %)} \\
+            \text{COCO}        
+            & \text{16,219 (44.1 %)} 
+            & \text{7,736 (21.0 %)} 
+            & \text{254 (0.7 %)} 
+            & \text{2,685 (7.3 %)} 
+            & \text{3,497 (9.5 %)} 
+            & \text{98 (0.3 %)} \\
+            \text{KITTI}       
+            & \text{22,710 (57.4 %)} 
+            & \text{7,167 (18.1 %)} 
+            & \text{1,026 (2.6 %)} 
+            & \text{961 (2.4 %)} 
+            & \text{2,174 (5.5 %)} 
+            & \text{479 (1.2 %)} \\
+            \text{Pascal VOC} 
+            & \text{3,654 (11.6 %)} 
+            & \text{2,210 (7.0 %)} 
+            & \text{52 (0.2 %)} 
+            & \text{761 (2.4 %)} 
+            & \text{1,290 (4.1 %)} 
+            & \text{25 (0.1 %)} \\
+            \bottomrule
+            \end{array}
+            $$
+          </p>
+        </div>
+
+        <p class="min-w-0 break-words [overflow-wrap:anywhere]">
+          <b>Label Errors in the Original Ground Truth.</b> We compare the original and validated ground truth to identify three types of label errors: missing bounding boxes, misaligned bounding boxes, and classification errors. We report results for a less restrictive setting considering all objects with confidence $p\ge 0.5$, and a stricter setting considering high-confidence objects ($p\ge 0.8$) with a minimum height of 40 pixels. Across all datasets, missing bounding boxes are the most common error typed, followed by misaligned boxes, while classification errors are comparatively rare. The substantial reduction in errors under the stricter setting further indicates that many annotation differences are associated with small objects.
+        </p>
+
+        <div class="w-full overflow-x-auto pb-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-4 min-w-[700px] max-w-4xl mx-auto text-center">
+            
+            <!-- Cityscapes Table -->
+            <div>
+              $$
+              \begin{array}{l c c c c}
+              \toprule
+              \textbf{Cityscapes} & \textbf{AP} & \textbf{Prec} & \textbf{Rec} & \textbf{F1} \\
+              \midrule
+              \text{Naive Baseline} & \text{-} & 1.50 & 99.61 & 2.96 \\
+              \text{Score Baseline} & 23.44 & 28.07 & 43.77 & 34.21 \\
+              \text{Loss Inspection} & 15.53 & 18.89 & 41.47 & 25.96 \\
+              \text{ObjectLab} & 18.44 & 24.02 & 38.81 & 29.68 \\
+              \text{MetaDetect} & 18.70 & 24.14 & 33.54 & 28.07 \\
+              \bottomrule
+              \end{array}
+              $$
+            </div>
+
+            <!-- COCO Table -->
+            <div>
+              $$
+              \begin{array}{l c c c c}
+              \toprule
+              \textbf{COCO} & \textbf{AP} & \textbf{Prec} & \textbf{Rec} & \textbf{F1} \\
+              \midrule
+              \text{Naive Baseline} & \text{-} & 2.10 & 98.25 & 4.12 \\
+              \text{Score Baseline} & 38.21 & 37.92 & 51.09 & 43.53 \\
+              \text{Loss Inspection} & 10.42 & 13.85 & 31.12 & 19.17 \\
+              \text{ObjectLab} & 21.01 & 34.51 & 27.88 & 30.84 \\
+              \text{MetaDetect} & 26.37 & 29.51 & 32.82 & 31.08 \\
+              \bottomrule
+              \end{array}
+              $$
+            </div>
+
+            <!-- KITTI Table -->
+            <div>
+              $$
+              \begin{array}{l c c c c}
+              \toprule
+              \textbf{KITTI} & \textbf{AP} & \textbf{Prec} & \textbf{Rec} & \textbf{F1} \\
+              \midrule
+              \text{Naive Baseline} & \text{-} & 1.78 & 99.99 & 3.50 \\
+              \text{Score Baseline} & 59.65 & 56.60 & 62.25 & 59.29 \\
+              \text{Loss Inspection} & 6.72 & 21.28 & 24.81 & 22.91 \\
+              \text{ObjectLab} & 29.99 & 41.02 & 33.51 & 36.89 \\
+              \text{MetaDetect} & 19.87 & 51.23 & 15.93 & 24.30 \\
+              \bottomrule
+              \end{array}
+              $$
+            </div>
+
+            <!-- Pascal VOC Table -->
+            <div>
+              $$
+              \begin{array}{l c c c c}
+              \toprule
+              \textbf{Pascal VOC} & \textbf{AP} & \textbf{Prec} & \textbf{Rec} & \textbf{F1} \\
+              \midrule
+              \text{Naive Baseline} & \text{-} & 0.39 & 100.00 & 0.78 \\
+              \text{Score Baseline} & 36.68 & 37.08 & 54.30 & 44.06 \\
+              \text{Loss Inspection} & 3.27 & 7.19 & 14.29 & 9.56 \\
+              \text{ObjectLab} & 14.70 & 29.18 & 22.99 & 25.72 \\
+              \text{MetaDetect} & 21.20 & 43.00 & 31.11 & 36.10 \\
+              \bottomrule
+              \end{array}
+              $$
+            </div>
+
+          </div>
+        </div>
+
+        <p class="min-w-0 break-words [overflow-wrap:anywhere]">
+          <b>Label Error Detection Benchmark.</b> We evaluate several label error detection methods on real label errors across four datasets using average precision (AP), precision, recall, and F1-score. While the naive baseline achieves nearly perfect recall, its very low precision makes it impractical for efficient dataset review. The score baseline performs best overall, achieving the highest F1-score and AP across all datasets. Overall, the results show that existing methods still struggle to reliably identify real-world label errors, highlighting a substantial gap between performance on synthetic and real label errors.
+        </p>
+
       </section>
 
       <!-- RESOURCES -->
       <section id="resources" class="space-y-6 px-6 py-8 lg:max-w-6xl lg:mx-auto">
         <h2 class="text-2xl font-semibold">Resources & Links</h2>
         <ul class="list-disc list-inside space-y-2">
-          <li><a href="https://ebooks.iospress.nl/doi/10.3233/FAIA250793" class="text-blue-600 hover:underline">Paper</a></li>
-          <li><a href="https://github.com/vanbetteray/conv_svd_by_lfa" class="text-blue-600 hover:underline">GitHub</a></li>
+          <li><a href="https://arxiv.org/pdf/2609.21822" class="text-blue-600 hover:underline">Paper PDF</a></li>
+          <li><a href="https://arxiv.org/abs/2609.21822" class="text-blue-600 hover:underline">arXiv abstract & BibTeX</a></li>
+          <li><a href="https://github.com/JonathanKlees/Uncertainty-aware-Object-Detection" class="text-blue-600 hover:underline">Official implementation (PyTorch)</a></li>
         </ul>
       </section>
 
@@ -418,29 +509,6 @@
               </a>
             </p>
           </div>
-      
-          <!-- Just scan it -->
-          <div class="w-40 flex flex-col items-center">
-            <a href="https://www.ki-deltalearning.de/" target="_blank" rel="noopener noreferrer">
-              <img
-                src="./assets/images/project-delta-learning.png"
-                alt="Just scan it 3d Logo"
-                loading="lazy"
-                class="w-full h-auto"
-              >
-            </a>
-            <p class="mt-2 text-sm text-gray-600 text-center">
-              <a
-                href="https://www.ki-deltalearning.de/"
-                class="text-blue-600 hover:underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                KI Delta Learning
-              </a>
-            </p>
-          </div>
-          
           <!-- Bmftr -->
           <div class="flex flex-col items-center" style="width: 100px;">
             <a href="https://www.bundesregierung.de/breg-en/federal-government/ministries/federal-ministry-of-research-technology-and-space" target="_blank" rel="noopener noreferrer">
@@ -463,16 +531,7 @@
             </p>
           </div>
         </div>
-        <p>* This work is partially supported by the German Federal Ministry for Eco-
-          nomic Affairs and Climate Action, within the project “KI Delta Learning”
-          (grant no. 19A19013Q) and partially supported by the German Federal Ministry of Research and Technology and Space.
-          <br><br>∗∗ M.R. acknowledges support by the German Federal Ministry of Education
-          and Research within the junior research group project “UnrEAL” (grant no.
-          01IS22069).
-          <br><br>
-          ∗∗∗ The contribution of K.K. is partially funded by the European Union’s
-          HORIZON MSCA Doctoral Networks programme project AQTIVATE (grant
-          no. 101072344)</p>
+        <p>S.P., J.K.\ and M.R.\ acknowledge support by the German Federal Ministry of Research, Technology and Space (BMFTR) within the project ``RELiABEL'' (grant no.\ 16IS24019B). L.S.\ also acknowledges support by the BMFTR within the same project ``RELiABEL'' (grant no.\ 16IS24019A).</p>
       </section>
 
       <!-- CITATION (bottom) -->
@@ -486,14 +545,15 @@
                       bg-gray-100 rounded-lg p-3
                       text-[0.70rem] leading-5 font-mono
                       text-gray-700 select-all">
-                      @inproceedings{vanBetteray2025LFA,  
-                        author = {Antonia van Betteray and Matthias Rottmann and Karsten Kahl},  
-                        title = {LFA Applied to CNNs: Efficient Singular Value Decomposition of Convolutional Mappings by Local Fourier Analysis},  
-                        booktitle = {Frontiers in Artificial Intelligence and Applications, Volume 413: ECAI 2025},  
-                        pages = {90--97},  
-                        year = {2025},  
-                        doi = {10.3233/FAIA250793},  
-                        publisher = {IOS Press} }
+@misc{penquitt2026objectdetectionbenchmark,
+      title={Object Detection Benchmarks are Incomplete: The Role of Label Errors and Annotation Uncertainty}, 
+      author={Sarina Penquitt and Jonathan Klees and Antonia van Betteray and Parssa Jashnieh and Peter Stehr and Matthias Rottmann and Lars Schmarje},
+      year={2026},
+      eprint={2609.21822},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2609.21822}, 
+}
           </pre>
 
           <!-- copy‑to‑clipboard button -->
@@ -526,7 +586,7 @@
         <h2 class="text-2xl font-semibold">Contact</h2>
         <p class="text-sm">Have questions or want to collaborate? Reach out:</p>
         <ul class="space-y-1 text-sm">
-          <li>Email: <a href="mailto:antonia.vanbetteray[at]uni-osnabrueck.de" class="text-blue-600 hover:underline">antonia.vanbetteray[at]uni-osnabrueck.de</a></li>
+          <li>Email: <a href="mailto:sarina.penquitt[at]uni-osnabrueck.de" class="text-blue-600 hover:underline">sarina.penquitt@uni-osnabrueck.de</a></li>
         </ul>
       </section>
 
